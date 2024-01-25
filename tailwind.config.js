@@ -31,6 +31,10 @@ module.exports = {
         'gray-100': 'rgb(234, 236, 240)',
         'gray-400': 'rgb(183, 183, 183)',
         'gray-500': 'rgb(119, 119, 119)',
+        'gray-900': 'rgb(16, 24, 40)',
+      },
+      boxShadow: {
+        'menu-shadow': '6px 0px 18px 0px rgba(0, 0, 0, 0.06)',
       },
       dropShadow: {
         shadow: '0px 17px 25px rgba(0, 0, 0, 0.25)',
