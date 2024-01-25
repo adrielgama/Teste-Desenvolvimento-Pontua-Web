@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { AtSign } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 import * as z from 'zod'
 
 import Box from '@/components/box'
@@ -30,10 +31,9 @@ function ForgotPassword() {
   const onSubmit = async (values: z.infer<typeof recoverPasswordSchema>) => {
     try {
       await recoverPassword(values.email)
-
       navigate('/recovery-password')
     } catch (error) {
-      console.log(error)
+      toast.error('E-mail não encontrado')
     }
   }
 

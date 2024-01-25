@@ -1,13 +1,13 @@
 # *Teste Desenvolvimento Pontua Web*
-> Esse é o teste para desenvolvedores na Pontua Web.<br>
-> Sinta-se livre para editar a partir do título "Documentação da Aplicação".<br>
+> Esse é o teste para desenvolvedores na Pontua Web.<br/>
+> Sinta-se livre para editar a partir do título "Documentação da Aplicação".<br/>
 > Essa aplicação deve ser criada com base e utilização na api fornecida pela Marvel 
-[https://developer.marvel.com/](https://developer.marvel.com/)<br>
+[https://developer.marvel.com/](https://developer.marvel.com/)<br/>
 ---
 
-> Qualquer dúvida poderá ser enviada por e-mail em tecnologia@pontua.com.br;<br>
-> O prazo para finalização do teste deverá ser fornecido pelo RH;<br>
->***Não deixe de entregar sua aplicação*** mesmo que não esteja pronta ou perfeita;<br>
+> Qualquer dúvida poderá ser enviada por e-mail em tecnologia@pontua.com.br;<br/>
+> O prazo para finalização do teste deverá ser fornecido pelo RH;<br/>
+>***Não deixe de entregar sua aplicação*** mesmo que não esteja pronta ou perfeita;<br/>
 > A entrega do código deverá ser feita no GitHub e após o término, notificar o time atráves do e-mail tecnologia@pontua.com.br e gente@pontua.com.br.
 
 ---
@@ -18,11 +18,11 @@
 
 ## Página de Login
 
-***Eu como usuário:***<br>
+***Eu como usuário:***<br/>
 > Irei inserir o meu e-mail e senha de acesso para navegar para a tela de Agentes.
 
-***Quando eu:***<br>
-> Clicar no botão entrar, se sucesso deverá navegar para a próxima tela, caso ocorra erro, ver uma notificação;<br> 
+***Quando eu:***<br/>
+> Clicar no botão entrar, se sucesso deverá navegar para a próxima tela, caso ocorra erro, ver uma notificação;<br/> 
 > informando que o email ou senha está inválido.
 
 ### *Opcional*
@@ -38,10 +38,10 @@
 
 ## Página de seleção de Agente
 
-***Eu como usuário:***<br>
+***Eu como usuário:***<br/>
 > Irei selecionar o agente de minha escolha para acessar a página de perfil do agente.
 
-***Quando eu:***<br>
+***Quando eu:***<br/>
 > Clicar no campo de escolha deverá ser exibido uma lista com os nomes e foto do perfil de cada agente,
 e ao clicar no botão entrar ser redirecionado para a tela de perfil do agente;
 
@@ -56,13 +56,13 @@ e ao clicar no botão entrar ser redirecionado para a tela de perfil do agente;
 
 ## Página de Perfil de Agente
 
-***Eu como usuário:***<br>
+***Eu como usuário:***<br/>
 > Ao acessar a tela preciso ver a aba de visão geral com o descritivo sobre o agente, 
-bem como seu nome e imagem;<br>
-> Quero poder navegar nas abas de características, conforme layout do Figma;<br>
+bem como seu nome e imagem;<br/>
+> Quero poder navegar nas abas de características, conforme layout do Figma;<br/>
 > Preciso visualizar o menu com as opções de acessar a Home, Perfil e sair do sistema.
 
-***Quando eu:***<br>
+***Quando eu:***<br/>
 > Clicar em uma das abas disponíveis daquele agente, preciso ver uma lista com as informações daquela aba.
 
 ### *Critérios de aceite*
@@ -76,17 +76,17 @@ bem como seu nome e imagem;<br>
 
 ## Página Home
 
-***Eu como usuário:***<br>
-> Desejo visualizar uma lista de cards com fotos de perfil e um resumo de personagens;<br>
-> Quero poder navegar na lista pela paginação no final da página;<br>
+***Eu como usuário:***<br/>
+> Desejo visualizar uma lista de cards com fotos de perfil e um resumo de personagens;<br/>
+> Quero poder navegar na lista pela paginação no final da página;<br/>
 > Quando eu clicar no campo de pesquisa e digitar o nome do agente, me mostre somente os personagens que contém aquele termo buscado.
 
-***Quando eu:***<br>
-> Clicar no card do personagem, deverei ser redirecionado para a página de perfil do personagem escolhido;<br>
-> Fizer uma busca, o sistema deverá exibir na lista somente os personagens que contém aquele nome.<br>
-> Clicar no botão "Próxima" deverá exibir os próximos cards da lista (próxima página);<br>
-> Clicar no botão "Anterior" deverá exibir os cards anteriores da lista (página anterior);<br>
-> Quando eu clicar no botão com número de páginação, exibir os cards relativos aquela página selecionada.<br>
+***Quando eu:***<br/>
+> Clicar no card do personagem, deverei ser redirecionado para a página de perfil do personagem escolhido;<br/>
+> Fizer uma busca, o sistema deverá exibir na lista somente os personagens que contém aquele nome.<br/>
+> Clicar no botão "Próxima" deverá exibir os próximos cards da lista (próxima página);<br/>
+> Clicar no botão "Anterior" deverá exibir os cards anteriores da lista (página anterior);<br/>
+> Quando eu clicar no botão com número de páginação, exibir os cards relativos aquela página selecionada.<br/>
 
 ### *Critérios de aceite*
 >- Exibir resumo e foto de perfil;
@@ -101,10 +101,10 @@ bem como seu nome e imagem;<br>
 ># *Opcional* *
 ## Página Recuperação de Senha 
 
-***Eu como usuário:***<br>
+***Eu como usuário:***<br/>
 > Irei inserir o email que realizei o cadastro na plataforma no campo disponivel e, clicarei no botão enviar link.
 
-***Quando eu:***<br>
+***Quando eu:***<br/>
 > Clicar no botão de enviar link, deverá aparecer a mensagem de envio com sucesso.
 
 ### *Critérios de aceite*

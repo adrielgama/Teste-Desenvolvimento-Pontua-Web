@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { AtSign, Eye, EyeOff, ShieldQuestion } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 import * as z from 'zod'
 
 import ArrowRightSquare from '@/assets/login_arrow_right.svg'
@@ -38,8 +39,10 @@ function Login() {
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
       await onLogin(values.email, values.password)
-      navigate('/home')
+      toast.success('Login efetuado com sucesso')
+      navigate('/character-picker')
     } catch (error) {
+      toast.error('Login ou senha inválidos')
       console.log(error)
     }
   }
@@ -62,78 +65,80 @@ function Login() {
     >
       <div className="mt-2">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <div className="relative">
-                      <Input
-                        type="e-mail"
-                        placeholder="Informe seu e-mail"
-                        className={`rounded-[10px] px-4 py-7 placeholder:font-normal placeholder:text-gray-400 first-of-type:font-bold first-of-type:text-blue-500 focus:outline-none ${field.value ? 'border-blue-500' : 'border-gray-400'}`}
-                        {...field}
-                      />
-                      <div
-                        className={`absolute inset-y-0 right-0 flex items-center pr-3 ${field.value ? 'text-blue-500' : 'text-gray-400'} cursor-pointer`}
-                      >
-                        <AtSign size={17} />
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+            <div className="space-y-5">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          type="e-mail"
+                          placeholder="Informe seu e-mail"
+                          className={`rounded-[10px] px-4 py-7 placeholder:font-normal placeholder:text-gray-400 first-of-type:font-bold first-of-type:text-blue-500 focus:outline-none ${field.value ? 'border-blue-500' : 'border-gray-400'}`}
+                          {...field}
+                        />
+                        <div
+                          className={`absolute inset-y-0 right-0 flex items-center pr-3 ${field.value ? 'text-blue-500' : 'text-gray-400'} cursor-pointer`}
+                        >
+                          <AtSign size={17} />
+                        </div>
                       </div>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <div className="relative">
-                      <Input
-                        type={showPassword ? 'text' : 'password'}
-                        placeholder="Informe sua senha"
-                        className={`rounded-[10px] px-4 py-7 placeholder:font-normal placeholder:text-gray-400 first-of-type:font-bold first-of-type:text-blue-500 focus:outline-none ${field.value ? 'border-blue-500' : 'border-gray-400'}`}
-                        {...field}
-                      />
-                      <div className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3 text-gray-400">
-                        {showPassword ? (
-                          <EyeOff
-                            size={17}
-                            onClick={togglePasswordVisibility}
-                          />
-                        ) : (
-                          <Eye
-                            size={17}
-                            className={
-                              field.value ? 'text-blue-500' : 'text-gray-400'
-                            }
-                            onClick={togglePasswordVisibility}
-                          />
-                        )}
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          type={showPassword ? 'text' : 'password'}
+                          placeholder="Informe sua senha"
+                          className={`rounded-[10px] px-4 py-7 placeholder:font-normal placeholder:text-gray-400 first-of-type:font-bold first-of-type:text-blue-500 focus:outline-none ${field.value ? 'border-blue-500' : 'border-gray-400'}`}
+                          {...field}
+                        />
+                        <div className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3 text-gray-400">
+                          {showPassword ? (
+                            <EyeOff
+                              size={17}
+                              onClick={togglePasswordVisibility}
+                            />
+                          ) : (
+                            <Eye
+                              size={17}
+                              className={
+                                field.value ? 'text-blue-500' : 'text-gray-400'
+                              }
+                              onClick={togglePasswordVisibility}
+                            />
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <Button
+              type="submit"
+              className="w-full gap-2 rounded-[10px] bg-blue-800 py-7 text-2xl font-bold text-white hover:bg-blue-600"
+            >
+              entrar
+              <img src={ArrowRightSquare} alt="Seta para direita" />
+            </Button>
           </form>
-          <Button
-            type="submit"
-            className="mt-2 w-full gap-2 rounded-[10px] bg-blue-800 py-7 text-2xl font-bold text-white"
-          >
-            entrar
-            <img src={ArrowRightSquare} alt="Seta para direita" />
-          </Button>
         </Form>
         <div className="mt-3 flex w-full justify-end">
           <button
-            className="flex cursor-pointer flex-row gap-1 text-end text-[11px] text-orange-400 "
+            className="flex cursor-pointer flex-row gap-1 text-end text-[11px] text-orange-400 hover:text-orange-400/80"
             onClick={handleForgorPassword}
           >
             <ShieldQuestion size={14} />

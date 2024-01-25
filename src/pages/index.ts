@@ -1,3 +1,4 @@
-export * from './home/login'
-export * from './home/forgotPassword'
-export * from './home/passwordRecovery'
+export * from './home/Login'
+export * from './home/CharacterPicker'
+export * from './home/ForgotPassword'
+export * from './home/PasswordRecovery'

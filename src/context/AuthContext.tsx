@@ -26,7 +26,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
 
   const mockUser = {
-    email: 'user@example.com',
+    email: 'user@email.com',
     password: '123',
   }
 
