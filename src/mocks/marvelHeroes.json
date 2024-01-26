@@ -1,10 +1,4 @@
 {
-  "code": 200,
-  "status": "Ok",
-  "copyright": "© 2024 MARVEL",
-  "attributionText": "Data provided by Marvel. © 2024 MARVEL",
-  "attributionHTML": "<a href=\"http://marvel.com\">Data provided by Marvel. © 2024 MARVEL</a>",
-  "etag": "3cdad81eb071614ff249b73ecef3d79cde180b0c",
   "data": {
     "offset": 0,
     "limit": 20,

@@ -1,8 +1,21 @@
+import { useState } from 'react'
+
 import { Search as SearchIcon } from 'lucide-react'
 
 import { Input } from './ui/input'
 
-function Search() {
+interface SearchProps {
+  onSearch: (value: string) => void
+}
+
+export const Search: React.FC<SearchProps> = ({ onSearch }) => {
+  const [searchValue, setSearchValue] = useState('')
+
+  const handleSearch = (value: string) => {
+    setSearchValue(value)
+    onSearch(value)
+  }
+
   return (
     <div className="fixed flex w-full items-center justify-center gap-0 bg-white p-4 font-navigation font-medium text-blue-200 shadow-menu-shadow lg:fixed lg:left-64 lg:pb-[15px] lg:pl-8">
       <SearchIcon size={15} className="font-medium" />
@@ -10,9 +23,9 @@ function Search() {
         className="border-none focus-visible:ring-transparent"
         placeholder="Busque um agente"
         type="text"
+        value={searchValue}
+        onChange={(e) => handleSearch(e.target.value)}
       />
     </div>
   )
 }
-
-export default Search

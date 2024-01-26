@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import { Toaster } from '@/components/ui/sonner'
-import { AgentProvider } from '@/context/AgentContext'
+import { CharacterProvider } from '@/context/CharacterContext'
 // import { AuthProvider } from '@/context/AuthContext'
 import NotFound from '@/pages/404/NotFound'
 import Home from '@/pages/home'
@@ -24,7 +24,7 @@ function App() {
         }}
       />
       {/* <AuthProvider> */}
-      <AgentProvider>
+      <CharacterProvider>
         <Routes>
           <Route path="/" element={<FormPage page="login" />} />
           <Route
@@ -54,7 +54,7 @@ function App() {
           <Route path="/home/*" element={<Home />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </AgentProvider>
+      </CharacterProvider>
       {/* </AuthProvider> */}
     </Router>
   )
