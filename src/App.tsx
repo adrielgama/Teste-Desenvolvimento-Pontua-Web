@@ -6,6 +6,7 @@ import { CharacterProvider } from '@/context/CharacterContext'
 import NotFound from '@/pages/404/NotFound'
 import Home from '@/pages/home'
 import FormPage from '@/pages/login'
+import { Profile } from '@/pages/profile'
 import ProtectedWrapper from '@/routes/ProtectedWrapper'
 
 import './globals.css'
@@ -52,6 +53,7 @@ function App() {
             }
           /> */}
           <Route path="/home/*" element={<Home />} />
+          <Route path="/profile/*" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </CharacterProvider>

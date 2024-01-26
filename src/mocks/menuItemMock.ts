@@ -11,4 +11,12 @@ const menuItems: MenuItem[] = [
   { icon: User, label: 'Perfil', route: '/profile' },
 ]
 
-export { menuItems }
+const profileNavigation = [
+  { label: 'Visão Geral', route: '/profile' },
+  { label: 'Teams', route: '/teams' },
+  { label: 'Powers', route: '/powers' },
+  { label: 'Species', route: '/species' },
+  { label: 'Authors', route: '/authors' },
+]
+
+export { menuItems, profileNavigation }

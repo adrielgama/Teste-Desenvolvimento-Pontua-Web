@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { CornerUpLeft } from 'lucide-react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import LogoPontuaBlue from '@/assets/logo_pontua_blue.svg'
 import { menuItems } from '@/mocks/menuItemMock'
@@ -10,6 +10,7 @@ import { Separator } from './ui/separator'
 
 function Sidenav() {
   const location = useLocation()
+  const navigate = useNavigate()
 
   return (
     <div className="fixed bottom-0 z-50 flex h-16 w-full items-center justify-evenly bg-white shadow-menu-shadow lg:h-screen lg:w-64 lg:flex-col lg:items-start lg:justify-normal lg:space-y-2">
@@ -26,6 +27,7 @@ function Sidenav() {
             className={`flex cursor-pointer flex-row items-center justify-center gap-3 rounded-lg p-2 text-[13px] transition-all ${
               location.pathname === item.route ? 'text-orange-500' : ''
             } font-medium hover:bg-gray-100 lg:justify-normal`}
+            onClick={() => navigate(item.route ?? '/')}
           >
             {React.createElement(item.icon, { size: 20 })} {item.label}
           </li>
