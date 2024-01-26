@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import { useQuery } from '@tanstack/react-query'
 import { Check, ChevronDown, ChevronUp, User } from 'lucide-react'
@@ -20,24 +20,25 @@ import {
 } from '@/components/ui/popover'
 import { useCharacterContext } from '@/context/CharacterContext'
 import { cn } from '@/lib/utils'
+import { ICharacter } from '@/types/character'
 
 function CharacterPicker() {
   const navigate = useNavigate()
   const { selectedCharacter, selectCharacter, getCharacters } =
     useCharacterContext()
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = React.useState(false)
 
   const { data: charactersData } = useQuery({
     queryKey: ['characters'],
-    queryFn: () => getCharacters(''),
+    queryFn: () => getCharacters('', 1, 8),
+    retry: 1,
   })
 
-  useEffect(() => {
+  React.useEffect(() => {
     console.log(selectedCharacter)
   }, [selectedCharacter])
 
-  // TODO - ajustar a tipagem do item abaixo
-  const handleCharacterSelection = (characterValue: any) => {
+  const handleCharacterSelection = (characterValue: ICharacter) => {
     selectCharacter(characterValue)
     setOpen(false)
   }
@@ -93,12 +94,12 @@ function CharacterPicker() {
             <Command>
               <CommandEmpty>No character found.</CommandEmpty>
               <CommandGroup>
-                {charactersData?.map((character) => (
+                {charactersData?.data?.map((character) => (
                   <CommandItem
                     key={character.id}
                     value={character.name}
-                    onSelect={() => handleCharacterSelection(character.id)}
-                    className="flow-row flex w-full justify-between"
+                    onSelect={() => handleCharacterSelection(character)}
+                    className="flow-row flex w-full cursor-pointer justify-between"
                   >
                     <div className="flex flex-1">
                       <Avatar className="mr-2 h-6 w-6">

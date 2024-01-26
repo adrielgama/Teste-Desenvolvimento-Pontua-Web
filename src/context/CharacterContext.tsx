@@ -8,25 +8,20 @@ import React, {
 } from 'react'
 
 import charactersData from '@/mocks/marvelHeroes.json'
+import { ICharacter, GetCharactersResponse } from '@/types/character'
 
 interface CharacterProviderProps {
   children: ReactNode
 }
 
-interface Character {
-  id: number
-  name: string
-  description: string
-  thumbnail: {
-    path: string
-    extension: string
-  }
-}
-
 interface ICharacterContextData {
-  selectedCharacter: Character | null
-  selectCharacter: (character: Character | null) => void
-  getCharacters: (query: string) => Promise<Character[]>
+  selectedCharacter: ICharacter | null
+  selectCharacter: (character: ICharacter | null) => void
+  getCharacters: (
+    query: string,
+    page: number,
+    pageSize: number
+  ) => Promise<GetCharactersResponse>
 }
 
 const CharacterContext = createContext({} as ICharacterContextData)
@@ -36,25 +31,36 @@ export const useCharacterContext = () => useContext(CharacterContext)
 export const CharacterProvider: React.FC<CharacterProviderProps> = ({
   children,
 }) => {
-  const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
+  const [selectedCharacter, setSelectedCharacter] = useState<ICharacter | null>(
     null
   )
 
-  const selectCharacter = useCallback((character: Character | null) => {
+  const selectCharacter = useCallback((character: ICharacter | null) => {
     setSelectedCharacter(character)
   }, [])
 
   const getCharacters = useCallback(
-    async (query: string): Promise<Character[]> => {
-      const characters: Character[] = charactersData.data.results
+    async (
+      query: string,
+      page: number,
+      pageSize: number
+    ): Promise<GetCharactersResponse> => {
+      const characters: ICharacter[] = charactersData.data.results
 
-      if (query) {
-        return characters.filter((character) =>
-          character.name.toLowerCase().includes(query.toLowerCase())
-        )
+      const filteredCharacters = query
+        ? characters.filter((character) =>
+            character.name.toLowerCase().includes(query.toLowerCase())
+          )
+        : characters
+
+      const startIndex = (page - 1) * pageSize
+      const endIndex = startIndex + pageSize
+      const paginatedCharacters = filteredCharacters.slice(startIndex, endIndex)
+
+      return {
+        data: paginatedCharacters,
+        totalItems: filteredCharacters.length,
       }
-
-      return characters
     },
     []
   )

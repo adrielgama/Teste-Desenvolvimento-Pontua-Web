@@ -12,5 +12,7 @@ export const api = axios.create({
     ts,
     apikey: VITE_PUBLIC_KEY,
     hash,
+    limit: 10, // TODO passar por PROPS para manipular
+    offset: 10, // TODO passar por PROPS para manipular
   },
 })

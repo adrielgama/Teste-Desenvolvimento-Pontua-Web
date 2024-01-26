@@ -3,26 +3,42 @@ import React from 'react'
 
 import { useQuery } from '@tanstack/react-query'
 
-import { Character } from '@/components/character'
 import { Pagination } from '@/components/pagination'
 import { Search } from '@/components/search'
 import Sidenav from '@/components/sidenav'
 import { CharacterSkeleton } from '@/components/skeleton/CharacterCard'
 import { Separator } from '@/components/ui/separator'
 import { useCharacterContext } from '@/context/CharacterContext'
+import { useDebounce } from '@/hooks/useDebounce'
+import { GetCharactersResponse } from '@/types/character'
 
-function Home() {
-  const [currentPage, setCurrentPage] = React.useState(1)
-  const [searchValue, setSearchValue] = React.useState('')
+import CharacterGrid from './CharacterGrid'
+
+const ITEMS_PER_PAGE = 10
+
+const Home: React.FC = () => {
   const { getCharacters } = useCharacterContext()
-  const charactersPerPage = 10
+  const [searchValue, setSearchValue] = React.useState('')
+  const [currentPage, setCurrentPage] = React.useState(1)
+  const [isDebouncing, setIsDebouncing] = React.useState(false)
 
-  const { data: charactersData, isLoading: isCharactersLoading } = useQuery({
-    queryKey: ['characters', currentPage, searchValue],
-    queryFn: () => getCharacters(searchValue),
+  const debouncedSearchValue = useDebounce(searchValue, 500)
+
+  const {
+    data: charactersData,
+    isLoading: isCharactersLoading,
+    refetch,
+  } = useQuery<GetCharactersResponse, Error>({
+    queryKey: ['characters', debouncedSearchValue, currentPage],
+    queryFn: () =>
+      getCharacters(debouncedSearchValue, currentPage, ITEMS_PER_PAGE),
+    staleTime: 30000,
+    enabled: !isDebouncing,
   })
 
-  const currentCharacters = charactersData
+  const currentCharacters = charactersData?.data || []
+  const totalItems = charactersData?.totalItems || 0
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE)
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber)
@@ -30,51 +46,46 @@ function Home() {
 
   const handleSearch = (value: string) => {
     setSearchValue(value)
+    setCurrentPage(1)
+    setIsDebouncing(true)
   }
 
+  React.useEffect(() => {
+    if (isDebouncing) {
+      const timer = setTimeout(() => {
+        setIsDebouncing(false)
+        refetch()
+      }, 500)
+
+      return () => clearTimeout(timer)
+    }
+  }, [isDebouncing, refetch])
+
   return (
-    <div className="">
+    <>
       <Sidenav />
       <Search onSearch={handleSearch} />
-      {/* //TODO - ajuste de busca, após busca o item está centralizado quando retornado poucos AGENTS */}
-      <div className="absolute inset-0 bottom-14 top-16 -z-10 flex h-auto flex-col items-center justify-center gap-3 bg-white p-4 lg:left-64 lg:top-20 lg:gap-8">
-        <div className="flex flex-col gap-3 overflow-scroll px-4">
-          <div className="grid grid-cols-1 gap-3 lg:grid lg:grid-cols-4">
-            {currentCharacters
-              ?.slice(0, 8)
-              .map(({ id, name, description, thumbnail }) => (
-                <Character
-                  key={id}
-                  name={name}
-                  description={description}
-                  image={`${thumbnail.path}.${thumbnail.extension}`}
-                />
-              ))}
-          </div>
-          <div className="grid gap-3 lg:grid-cols-2">
-            {currentCharacters
-              ?.slice(8)
-              .map(({ id, name, description, thumbnail }) => (
-                <Character
-                  key={id}
-                  name={name}
-                  description={description}
-                  image={`${thumbnail.path}.${thumbnail.extension}`}
-                />
-              ))}
-          </div>
-          {(!currentCharacters || isCharactersLoading) && <CharacterSkeleton />}
+      <div className="absolute inset-0 bottom-14 top-16 -z-10 flex h-auto flex-col items-center gap-3 bg-white p-4 lg:left-64 lg:top-20 lg:gap-8">
+        <div className="w-full pb-36">
+          {(isDebouncing || isCharactersLoading) && <CharacterSkeleton />}
+          {!isDebouncing && !isCharactersLoading && (
+            <CharacterGrid currentCharacters={currentCharacters} />
+          )}
         </div>
-        <Separator className="hidden lg:block lg:max-w-7xl" />
-        {/* //TODO - organizar a paginação  */}
-        <Pagination
-          currentPage={currentPage}
-          totalItems={charactersData?.length || 0}
-          itemsPerPage={charactersPerPage}
-          onPageChange={handlePageChange}
-        />
+        <div className="fixed bottom-16 z-10 flex w-full flex-col items-center justify-center bg-white lg:bottom-0 lg:h-36">
+          <Separator className="fixed bottom-32 hidden lg:block lg:max-w-7xl" />
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              totalItems={totalItems}
+              itemsPerPage={ITEMS_PER_PAGE}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
