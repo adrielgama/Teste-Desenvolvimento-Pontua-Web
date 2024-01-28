@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { useNavigate } from 'react-router-dom'
+
 import { Character as CharacterComponent } from '@/components/character'
 import { useCharacterContext } from '@/context/CharacterContext'
 import { ICharacter } from '@/types/character'
@@ -10,12 +12,14 @@ interface CharacterGridProps {
 
 const CharacterGrid: React.FC<CharacterGridProps> = ({ currentCharacters }) => {
   const { selectCharacter } = useCharacterContext()
+  const navigate = useNavigate()
 
   const handleSelectedCharacter = (id: number) => {
     const selectedCharacter = currentCharacters.find(
       (character) => character.id === id
     )
     selectCharacter(selectedCharacter || null)
+    navigate('/profile')
   }
 
   return (

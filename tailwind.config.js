@@ -35,6 +35,7 @@ module.exports = {
       },
       boxShadow: {
         'menu-shadow': '6px 0px 18px 0px rgba(0, 0, 0, 0.06)',
+        'profile-shadow': '0px 6px 18px 0px rgba(0, 0, 0, 0.06)',
       },
       dropShadow: {
         shadow: '0px 17px 25px rgba(0, 0, 0, 0.25)',

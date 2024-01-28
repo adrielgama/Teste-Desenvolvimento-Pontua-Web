@@ -25,7 +25,12 @@ function Sidenav() {
         <ul key={index} className="flex w-full flex-col gap-2 px-3">
           <li
             className={`flex cursor-pointer flex-row items-center justify-center gap-3 rounded-lg p-2 text-[13px] transition-all ${
-              location.pathname === item.route ? 'text-orange-500' : ''
+              location.pathname.startsWith('/profile') &&
+              item.route.startsWith('/profile')
+                ? 'text-orange-500'
+                : location.pathname === item.route
+                  ? 'text-orange-500'
+                  : ''
             } font-medium hover:bg-gray-100 lg:justify-normal`}
             onClick={() => navigate(item.route ?? '/')}
           >

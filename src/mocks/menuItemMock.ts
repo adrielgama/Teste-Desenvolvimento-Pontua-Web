@@ -3,7 +3,7 @@ import { LucideIcon, LayoutDashboard, User } from 'lucide-react'
 interface MenuItem {
   icon: LucideIcon
   label: string
-  route?: string
+  route: string
 }
 
 const menuItems: MenuItem[] = [
