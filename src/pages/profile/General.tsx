@@ -1,5 +1,4 @@
 import ProfileBoxCharacter from '@/components/profile/profileBoxCharacter'
-import { PorfileNavbar } from '@/components/profile/profileNavbar'
 import { useCharacterContext } from '@/context/CharacterContext'
 
 export const General = () => {
@@ -13,7 +12,6 @@ export const General = () => {
 
   return (
     <div>
-      <PorfileNavbar />
       <ProfileBoxCharacter
         name={name}
         description={description}

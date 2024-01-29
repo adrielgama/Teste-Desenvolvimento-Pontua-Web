@@ -1,25 +1,33 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react'
 
-import { Route, Routes } from 'react-router-dom'
-
 import ProfileGenericList from '@/components/profile/profileGenericLists'
-import { PorfileNavbar } from '@/components/profile/profileNavbar'
+import { ProfileNavbar } from '@/components/profile/profileNavbar'
 import { Search } from '@/components/search'
 import Sidenav from '@/components/sidenav'
 import { useCharacterContext } from '@/context/CharacterContext'
-import { teamsList, authorsList, powersList, speciesList } from '@/mocks/fakers'
+import { updateSessionStorage } from '@/hooks/updateSessionStorage'
+import { categoryToListMap } from '@/mocks'
+import { speciesList } from '@/mocks/fakers'
 
 import { General } from './General'
 
 export const Profile: React.FC = () => {
   const { selectedCharacter } = useCharacterContext()
-  const categoryToListMap: { [key: string]: string[] } = {
-    teams: teamsList,
-    powers: powersList,
-    species: speciesList,
-    authors: authorsList,
+  const [activeTabs, setActiveTabs] = React.useState<number>(1)
+
+  const activePageListItem = categoryToListMap.find(
+    (item) => item.page === activeTabs
+  ) || {
+    page: 0,
+    list: [],
   }
+
+  React.useEffect(() => {
+    const currentCharacterId = selectedCharacter?.id
+    const storedCharacterId = sessionStorage.getItem('currentCharacterId')
+    updateSessionStorage(String(currentCharacterId), storedCharacterId)
+  }, [selectedCharacter])
 
   return (
     <>
@@ -36,24 +44,15 @@ export const Profile: React.FC = () => {
           </div>
         </div>
         <div className="w-full">
-          <Routes>
-            <Route path="/" element={<General />} />
-            {['teams', 'powers', 'species', 'authors'].map((category) => (
-              <Route
-                key={category}
-                path={`/${category}`}
-                element={
-                  <>
-                    <PorfileNavbar />
-                    <ProfileGenericList
-                      list={categoryToListMap[category]}
-                      maxItems={category === 'species' ? 2 : 7}
-                    />
-                  </>
-                }
-              />
-            ))}
-          </Routes>
+          <ProfileNavbar setActiveTab={setActiveTabs} activeTab={activeTabs} />
+          {activeTabs === 1 && <General />}
+          {activeTabs >= 2 && activeTabs <= 5 && (
+            <ProfileGenericList
+              page={activePageListItem.page}
+              list={activePageListItem.list}
+              maxItems={activePageListItem.list === speciesList ? 2 : 7}
+            />
+          )}
         </div>
       </div>
     </>

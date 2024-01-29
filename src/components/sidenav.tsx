@@ -4,7 +4,7 @@ import { CornerUpLeft } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import LogoPontuaBlue from '@/assets/logo_pontua_blue.svg'
-import { menuItems } from '@/mocks/menuItemMock'
+import { menuItems } from '@/mocks'
 
 import { Separator } from './ui/separator'
 
