@@ -19,7 +19,7 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({ currentCharacters }) => {
       (character) => character.id === id
     )
     selectCharacter(selectedCharacter || null)
-    navigate('/profile')
+    navigate(`/profile/${selectedCharacter?.id}`)
   }
 
   return (

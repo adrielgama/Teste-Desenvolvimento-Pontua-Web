@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { useParams } from 'react-router-dom'
+
 import ProfileGenericList from '@/components/profile/profileGenericLists'
 import { ProfileNavbar } from '@/components/profile/profileNavbar'
 import { Search } from '@/components/search'
@@ -12,8 +14,9 @@ import { speciesList } from '@/mocks/fakers'
 import { General } from './General'
 
 const Profile: React.FC = () => {
-  const { selectedCharacter } = useCharacterContext()
+  const { selectedCharacter, getCharacterDetails } = useCharacterContext()
   const [activeTabs, setActiveTabs] = React.useState<number>(1)
+  const { characterId } = useParams()
 
   const activePageListItem = categoryToListMap.find(
     (item) => item.page === activeTabs
@@ -23,10 +26,17 @@ const Profile: React.FC = () => {
   }
 
   React.useEffect(() => {
-    const currentCharacterId = selectedCharacter?.id
-    const storedCharacterId = sessionStorage.getItem('currentCharacterId')
-    updateSessionStorage(String(currentCharacterId), storedCharacterId)
-  }, [selectedCharacter])
+    const loadProfileData = async () => {
+      const currentCharacterId = selectedCharacter?.id || characterId
+      const storedCharacterId = sessionStorage.getItem('currentCharacterId')
+      updateSessionStorage(String(currentCharacterId), storedCharacterId)
+
+      if (!selectedCharacter) {
+        await getCharacterDetails(Number(currentCharacterId))
+      }
+    }
+    loadProfileData()
+  }, [selectedCharacter, characterId, getCharacterDetails])
 
   return (
     <>

@@ -22,7 +22,7 @@ const Home: React.FC = () => {
   const [currentPage, setCurrentPage] = React.useState(1)
   const [isDebouncing, setIsDebouncing] = React.useState(false)
 
-  const debouncedSearchValue = useDebounce(searchValue, 500)
+  const debouncedSearchValue = useDebounce(searchValue, 1000)
 
   const {
     data: charactersData,
@@ -32,7 +32,7 @@ const Home: React.FC = () => {
     queryKey: ['characters', debouncedSearchValue, currentPage],
     queryFn: () =>
       getCharacters(debouncedSearchValue, currentPage, ITEMS_PER_PAGE),
-    staleTime: 30000,
+    staleTime: 60 * 60 * 1000,
     enabled: !isDebouncing,
   })
 

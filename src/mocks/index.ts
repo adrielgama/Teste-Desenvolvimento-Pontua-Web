@@ -1,5 +1,7 @@
 import { LucideIcon, LayoutDashboard, User } from 'lucide-react'
 
+import { IUser } from '@/types/user'
+
 import { teamsList, powersList, speciesList, authorsList } from './fakers'
 
 interface MenuItem {
@@ -12,6 +14,21 @@ interface CategoryToListItem {
   page: number
   list: string[]
 }
+
+const mockUsers: IUser[] = [
+  {
+    id: 1,
+    email: 'user@email.com',
+    password: '123',
+    isAdmin: false,
+  },
+  {
+    id: 2,
+    email: 'user2@email.com',
+    password: '123',
+    isAdmin: true,
+  },
+]
 
 const menuItems: MenuItem[] = [
   { icon: LayoutDashboard, label: 'Home', route: '/home' },
@@ -33,4 +50,4 @@ const categoryToListMap: CategoryToListItem[] = [
   { page: 5, list: authorsList },
 ]
 
-export { menuItems, profileNavigation, categoryToListMap }
+export { menuItems, profileNavigation, categoryToListMap, mockUsers }

@@ -76,7 +76,7 @@ function App() {
               }
             />
             <Route
-              path="/profile"
+              path="/profile/:characterId"
               element={
                 <Suspense fallback={<Spinner />}>
                   <ProtectedWrapper>

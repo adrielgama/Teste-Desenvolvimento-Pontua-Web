@@ -32,10 +32,12 @@ function CharacterPicker() {
     queryKey: ['characters'],
     queryFn: () => getCharacters('', 1, 8),
     retry: 1,
+    staleTime: 60 * 60 * 1000,
   })
 
   const handleCharacterSelection = (characterValue: ICharacter) => {
-    selectCharacter(characterValue)
+    selectCharacter(characterValue, characterValue.id)
+    localStorage.setItem('selectedCharacter', JSON.stringify(selectedCharacter))
     setOpen(false)
   }
 
@@ -126,7 +128,7 @@ function CharacterPicker() {
         <Button
           type="submit"
           className="mt-2 w-full gap-2 rounded-[10px] bg-blue-800 py-7 text-2xl font-bold text-white disabled:bg-gray-500"
-          onClick={() => navigate('/profile')}
+          onClick={() => navigate(`/profile/${selectedCharacter?.id}`)}
         >
           Entrar
         </Button>

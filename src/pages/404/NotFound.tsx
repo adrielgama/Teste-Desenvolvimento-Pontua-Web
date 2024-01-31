@@ -1,4 +1,6 @@
-import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import BuildingImage from '@/assets/building.svg'
 import LogoPontuaWhite from '@/assets/logo_pontua_white.svg'
@@ -6,6 +8,13 @@ import { Button } from '@/components/ui/button'
 
 function NotFound() {
   const navigate = useNavigate()
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.pathname === '/profile') {
+      navigate('/home')
+    }
+  }, [location.pathname, navigate])
 
   return (
     <div className="h-screen w-screen bg-blue-900 p-4 font-navigation">

@@ -4,11 +4,13 @@ import { CornerUpLeft } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import LogoPontuaBlue from '@/assets/logo_pontua_blue.svg'
+import { useAuthContext } from '@/context/AuthContext'
 import { menuItems } from '@/mocks'
 
 import { Separator } from './ui/separator'
 
 function Sidenav() {
+  const { logout } = useAuthContext()
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -40,7 +42,10 @@ function Sidenav() {
       ))}
       <Separator className="hidden lg:block" />
       <div className="w-full gap-2 px-3 py-4">
-        <span className="flex cursor-pointer flex-row  items-center justify-center gap-3 rounded-lg p-2 text-[13px] font-medium hover:bg-gray-100 lg:justify-normal">
+        <span
+          onClick={() => logout()}
+          className="flex cursor-pointer flex-row  items-center justify-center gap-3 rounded-lg p-2 text-[13px] font-medium hover:bg-gray-100 lg:justify-normal"
+        >
           <CornerUpLeft size={20} /> Sair
         </span>
       </div>

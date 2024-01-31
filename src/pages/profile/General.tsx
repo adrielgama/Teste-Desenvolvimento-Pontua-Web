@@ -2,13 +2,14 @@ import ProfileBoxCharacter from '@/components/profile/profileBoxCharacter'
 import { useCharacterContext } from '@/context/CharacterContext'
 
 export const General = () => {
-  const { selectedCharacter } = useCharacterContext()
+  const { selectedCharacter, defaultCharacter } = useCharacterContext()
+  const characterToDisplay = selectedCharacter || defaultCharacter
 
-  if (!selectedCharacter) {
+  if (!characterToDisplay) {
     return null
   }
 
-  const { name, description, thumbnail } = selectedCharacter
+  const { name, description, thumbnail } = characterToDisplay
 
   return (
     <div>

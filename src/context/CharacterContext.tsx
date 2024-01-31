@@ -7,7 +7,7 @@ import React, {
   useCallback,
 } from 'react'
 
-import charactersData from '@/mocks/marvelHeroes.json'
+import { fetchMarvelData } from '@/api/fetchData'
 import { ICharacter, GetCharactersResponse } from '@/types/character'
 
 interface CharacterProviderProps {
@@ -16,12 +16,14 @@ interface CharacterProviderProps {
 
 interface ICharacterContextData {
   selectedCharacter: ICharacter | null
-  selectCharacter: (character: ICharacter | null) => void
+  defaultCharacter: ICharacter | null
+  selectCharacter: (character: ICharacter | null, id?: number) => void
   getCharacters: (
     query: string,
     page: number,
     pageSize: number
   ) => Promise<GetCharactersResponse>
+  getCharacterDetails: (id: number) => Promise<void>
 }
 
 const CharacterContext = createContext({} as ICharacterContextData)
@@ -34,10 +36,58 @@ export const CharacterProvider: React.FC<CharacterProviderProps> = ({
   const [selectedCharacter, setSelectedCharacter] = useState<ICharacter | null>(
     null
   )
+  const [defaultCharacter, setDefaultCharacter] = useState<ICharacter | null>(
+    null
+  )
 
-  const selectCharacter = useCallback((character: ICharacter | null) => {
-    setSelectedCharacter(character)
+  const fetchSingleCharacter = useCallback(async (id: number) => {
+    try {
+      const queryParams = {
+        limit: 1,
+        offset: 0,
+      }
+
+      const response = await fetchMarvelData(`characters/${id}`, queryParams)
+      const character: ICharacter | undefined = response.data.data.results[0]
+
+      return character
+    } catch (error) {
+      console.error('Erro ao obter personagem:', error)
+      throw error
+    }
   }, [])
+
+  const fetchDefaultCharacter = useCallback(
+    async (id: number) => {
+      const character = await fetchSingleCharacter(id)
+
+      if (character) {
+        setDefaultCharacter(character)
+      }
+    },
+    [fetchSingleCharacter]
+  )
+
+  const getCharacterDetails = useCallback(
+    async (id: number) => {
+      const character = await fetchSingleCharacter(id)
+
+      if (character) {
+        setSelectedCharacter(character)
+      }
+    },
+    [fetchSingleCharacter]
+  )
+
+  const selectCharacter = useCallback(
+    (character: ICharacter | null, id?: number) => {
+      setSelectedCharacter(character)
+      if (id) {
+        fetchDefaultCharacter(id)
+      }
+    },
+    [fetchDefaultCharacter]
+  )
 
   const getCharacters = useCallback(
     async (
@@ -45,21 +95,24 @@ export const CharacterProvider: React.FC<CharacterProviderProps> = ({
       page: number,
       pageSize: number
     ): Promise<GetCharactersResponse> => {
-      const characters: ICharacter[] = charactersData.data.results
+      try {
+        const queryParams = {
+          limit: pageSize,
+          offset: (page - 1) * pageSize,
+          ...(query && { nameStartsWith: query }),
+        }
 
-      const filteredCharacters = query
-        ? characters.filter((character) =>
-            character.name.toLowerCase().includes(query.toLowerCase())
-          )
-        : characters
+        const response = await fetchMarvelData('characters', queryParams)
+        const characters: ICharacter[] = response.data.data.results
+        const totalItems: number = response.data.data.total
 
-      const startIndex = (page - 1) * pageSize
-      const endIndex = startIndex + pageSize
-      const paginatedCharacters = filteredCharacters.slice(startIndex, endIndex)
-
-      return {
-        data: paginatedCharacters,
-        totalItems: filteredCharacters.length,
+        return {
+          data: characters,
+          totalItems,
+        }
+      } catch (error) {
+        console.error('Erro ao obter personagens:', error)
+        throw error
       }
     },
     []
@@ -68,10 +121,18 @@ export const CharacterProvider: React.FC<CharacterProviderProps> = ({
   const value = useMemo(
     () => ({
       selectedCharacter,
+      defaultCharacter,
       selectCharacter,
       getCharacters,
+      getCharacterDetails,
     }),
-    [selectedCharacter, selectCharacter, getCharacters]
+    [
+      selectedCharacter,
+      defaultCharacter,
+      selectCharacter,
+      getCharacters,
+      getCharacterDetails,
+    ]
   )
 
   return (
