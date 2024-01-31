@@ -40,7 +40,6 @@ function Login() {
     try {
       await onLogin(values.email, values.password)
       toast.success('Login efetuado com sucesso')
-      navigate('/character-picker')
     } catch (error) {
       toast.error('Login ou senha inválidos')
       console.log(error)

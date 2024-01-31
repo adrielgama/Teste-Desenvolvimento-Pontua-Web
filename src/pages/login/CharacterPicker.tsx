@@ -126,7 +126,7 @@ function CharacterPicker() {
         <Button
           type="submit"
           className="mt-2 w-full gap-2 rounded-[10px] bg-blue-800 py-7 text-2xl font-bold text-white disabled:bg-gray-500"
-          onClick={() => navigate('/home')}
+          onClick={() => navigate('/profile')}
         >
           Entrar
         </Button>

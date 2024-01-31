@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react'
 
 import ProfileGenericList from '@/components/profile/profileGenericLists'
@@ -12,7 +11,7 @@ import { speciesList } from '@/mocks/fakers'
 
 import { General } from './General'
 
-export const Profile: React.FC = () => {
+const Profile: React.FC = () => {
   const { selectedCharacter } = useCharacterContext()
   const [activeTabs, setActiveTabs] = React.useState<number>(1)
 
@@ -58,3 +57,5 @@ export const Profile: React.FC = () => {
     </>
   )
 }
+
+export default Profile
