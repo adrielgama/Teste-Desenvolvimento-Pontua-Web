@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import LogoPontuaBlue from '@/assets/logo_pontua_blue.svg'
 import { useAuthContext } from '@/context/AuthContext'
+import { useCharacterContext } from '@/context/CharacterContext'
 import { menuItems } from '@/mocks'
 
 import { Separator } from './ui/separator'
@@ -13,6 +14,7 @@ function Sidenav() {
   const { logout } = useAuthContext()
   const location = useLocation()
   const navigate = useNavigate()
+  const { defaultCharacter, selectedCharacter } = useCharacterContext()
 
   return (
     <div className="fixed bottom-0 z-50 flex h-16 w-full items-center justify-evenly bg-white shadow-menu-shadow lg:h-screen lg:w-64 lg:flex-col lg:items-start lg:justify-normal lg:space-y-2">
@@ -34,7 +36,13 @@ function Sidenav() {
                   ? 'text-orange-500'
                   : ''
             } font-medium hover:bg-gray-100 lg:justify-normal`}
-            onClick={() => navigate(item.route ?? '/')}
+            onClick={() =>
+              navigate(
+                item.route === '/profile'
+                  ? `/profile/${selectedCharacter?.id ?? defaultCharacter?.id}`
+                  : item.route
+              )
+            }
           >
             {React.createElement(item.icon, { size: 20 })} {item.label}
           </li>

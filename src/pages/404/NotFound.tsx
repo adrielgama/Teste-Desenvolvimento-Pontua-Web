@@ -6,21 +6,26 @@ import BuildingImage from '@/assets/building.svg'
 import LogoPontuaWhite from '@/assets/logo_pontua_white.svg'
 import { Spinner } from '@/components/spinner'
 import { Button } from '@/components/ui/button'
+import { useCharacterContext } from '@/context/CharacterContext'
 
 function NotFound() {
+  const { defaultCharacter, selectedCharacter } = useCharacterContext()
   const [redirect, setRedirect] = useState<boolean>(false)
   const navigate = useNavigate()
   const location = useLocation()
 
   useEffect(() => {
-    if (location.pathname === '/profile') {
+    if (
+      location.pathname === '/profile' &&
+      (!defaultCharacter || !selectedCharacter)
+    ) {
       setRedirect(true)
       setTimeout(() => {
         navigate('/home')
         setRedirect(false)
       }, 2000)
     }
-  }, [location.pathname, navigate])
+  }, [defaultCharacter, location.pathname, navigate, selectedCharacter])
 
   return redirect ? (
     <Spinner coverText="Redirecionando para a página inicial" />
