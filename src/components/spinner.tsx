@@ -1,6 +1,12 @@
 import LogoWhite from '@/assets/logo_pontua_white.svg'
 
-export const Spinner = () => {
+interface SpinnerProps {
+  coverText?: string
+}
+
+export const Spinner: React.FC<SpinnerProps> = ({
+  coverText = 'Carregando...',
+}) => {
   return (
     <div className="absolute left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-blue-800">
       <div className="flex flex-col items-center space-y-2">
@@ -85,8 +91,8 @@ export const Spinner = () => {
               ></line>
             </svg>
           </div>
-          <span className="text-xs font-medium text-slate-500">
-            Carregando...
+          <span className="text-sm font-medium text-slate-500">
+            {coverText}
           </span>
         </div>
       </div>

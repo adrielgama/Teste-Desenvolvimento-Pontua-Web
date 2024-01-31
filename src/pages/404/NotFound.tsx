@@ -1,22 +1,30 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import BuildingImage from '@/assets/building.svg'
 import LogoPontuaWhite from '@/assets/logo_pontua_white.svg'
+import { Spinner } from '@/components/spinner'
 import { Button } from '@/components/ui/button'
 
 function NotFound() {
+  const [redirect, setRedirect] = useState<boolean>(false)
   const navigate = useNavigate()
   const location = useLocation()
 
   useEffect(() => {
     if (location.pathname === '/profile') {
-      navigate('/home')
+      setRedirect(true)
+      setTimeout(() => {
+        navigate('/home')
+        setRedirect(false)
+      }, 2000)
     }
   }, [location.pathname, navigate])
 
-  return (
+  return redirect ? (
+    <Spinner coverText="Redirecionando para a página inicial" />
+  ) : (
     <div className="h-screen w-screen bg-blue-900 p-4 font-navigation">
       <div className="absolute lg:left-36">
         <img src={LogoPontuaWhite} alt="Logo PONTUA cor branca" />
