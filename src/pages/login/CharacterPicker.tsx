@@ -34,10 +34,6 @@ function CharacterPicker() {
     retry: 1,
   })
 
-  React.useEffect(() => {
-    console.log(selectedCharacter)
-  }, [selectedCharacter])
-
   const handleCharacterSelection = (characterValue: ICharacter) => {
     selectCharacter(characterValue)
     setOpen(false)
