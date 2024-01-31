@@ -19,7 +19,7 @@ export const RenderPageNumbers: React.FC<PaginationProps> = ({
   )
 
   const visiblePages = []
-  const maxVisiblePages = 3
+  const maxVisiblePages = 2
 
   if (totalPages <= maxVisiblePages) {
     visiblePages.push(...pageNumbers)
@@ -36,14 +36,15 @@ export const RenderPageNumbers: React.FC<PaginationProps> = ({
       visiblePages.push(
         1,
         ellipsis,
-        ...pageNumbers.slice(totalPages - maxVisiblePages + 1)
+        ...pageNumbers.slice(totalPages - maxVisiblePages)
       )
     } else {
-      const start = currentPage - Math.floor((maxVisiblePages - 4) / 2)
-      const end = currentPage + Math.ceil((maxVisiblePages - 4) / 2)
+      const start = currentPage - Math.floor((maxVisiblePages - 2) / 2)
+      const end = currentPage + Math.ceil((maxVisiblePages - 2) / 2)
       visiblePages.push(
         1,
         ellipsis,
+        currentPage,
         ...pageNumbers.slice(start, end),
         ellipsis,
         totalPages
@@ -58,15 +59,17 @@ export const RenderPageNumbers: React.FC<PaginationProps> = ({
         disabled={currentPage === 1}
         className="rounded-l-lg border-r-0 border-gray-200"
       >
-        <ArrowLeft size={20} className="mr-2 text-blue-200" />
-        <span className="text-sm font-medium text-blue-600">Anterior</span>
+        <ArrowLeft className="mr-2 h-4 w-4 text-blue-200 lg:h-5 lg:w-5" />
+        <span className="text-xs font-medium text-blue-600 lg:text-sm">
+          Anterior
+        </span>
       </NavigationButton>
 
       {visiblePages.map((pageNumber, index) => (
         <button
           key={index}
           type="button"
-          className={`inline-flex items-center border border-gray-200 px-4 py-2 text-sm font-semibold hover:bg-gray-50 ${
+          className={`inline-flex items-center border border-gray-200 px-4 py-2 text-xs font-semibold hover:bg-gray-50 lg:text-sm ${
             currentPage === pageNumber ? 'bg-gray-50 text-blue-600' : ''
           }`}
           onClick={() => onPageChange(Number(pageNumber))}
@@ -80,8 +83,10 @@ export const RenderPageNumbers: React.FC<PaginationProps> = ({
         disabled={currentPage === totalPages}
         className="rounded-r-lg border-l-0 border-gray-200"
       >
-        <span className="mr-2 text-sm font-medium text-blue-600">Próxima</span>
-        <ArrowRight size={20} />
+        <span className="text-xs font-medium text-blue-600 lg:text-sm">
+          Próxima
+        </span>
+        <ArrowRight className="ml-2 h-4 w-4 lg:h-5 lg:w-5" />
       </NavigationButton>
     </>
   )
