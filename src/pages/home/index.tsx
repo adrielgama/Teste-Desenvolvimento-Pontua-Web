@@ -77,8 +77,6 @@ const Home: React.FC = () => {
           {totalPages > 1 && (
             <Pagination
               currentPage={currentPage}
-              totalItems={totalItems}
-              itemsPerPage={ITEMS_PER_PAGE}
               totalPages={totalPages}
               onPageChange={handlePageChange}
             />

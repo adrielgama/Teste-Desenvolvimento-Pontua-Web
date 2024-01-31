@@ -4,8 +4,6 @@ import { ArrowLeft, ArrowRight } from 'lucide-react'
 
 interface PaginationProps {
   currentPage: number
-  totalItems: number
-  itemsPerPage: number
   totalPages: number
   onPageChange: (pageNumber: number) => void
 }
@@ -21,43 +19,91 @@ export const Pagination: React.FC<PaginationProps> = ({
     }
   }
 
-  return (
-    <div className="bottom-16 flex h-16 w-full justify-center bg-white px-8 py-3 lg:bottom-4">
-      <div className="flex w-full items-center justify-center gap-2 rounded-lg border lg:w-1/3">
+  const renderPageNumbers = () => {
+    const pageNumbers = Array.from(
+      { length: totalPages },
+      (_, index) => index + 1
+    )
+
+    const visiblePages = []
+    const maxVisiblePages = 3
+
+    if (totalPages <= maxVisiblePages) {
+      visiblePages.push(...pageNumbers)
+    } else {
+      const ellipsis = <span key="ellipsis">...</span>
+
+      if (currentPage <= maxVisiblePages) {
+        visiblePages.push(
+          ...pageNumbers.slice(0, maxVisiblePages),
+          ellipsis,
+          totalPages
+        )
+      } else if (currentPage >= totalPages - maxVisiblePages + 1) {
+        visiblePages.push(
+          1,
+          ellipsis,
+          ...pageNumbers.slice(totalPages - maxVisiblePages + 1)
+        )
+      } else {
+        const start = currentPage - Math.floor((maxVisiblePages - 4) / 2)
+        const end = currentPage + Math.ceil((maxVisiblePages - 4) / 2)
+        visiblePages.push(
+          1,
+          ellipsis,
+          ...pageNumbers.slice(start, end),
+          ellipsis,
+          totalPages
+        )
+      }
+    }
+
+    return (
+      <>
         <button
+          type="button"
+          className="inline-flex items-center rounded-l-lg border border-gray-200 px-2 py-2 text-sm font-semibold"
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="flex cursor-pointer items-center gap-2 px-3 text-blue-500"
         >
-          <ArrowLeft size={20} className="text-blue-200" />
-          <span className="font-medium text-blue-600 hover:text-blue-500/80">
-            Anterior
-          </span>
+          <ArrowLeft size={20} className="mr-2 text-blue-200" />
+          <span className="text-sm font-medium text-blue-600">Anterior</span>
         </button>
 
-        {Array.from({ length: totalPages }, (_, index) => (
+        {visiblePages.map((pageNumber, index) => (
           <button
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            className={`px-3 py-1 font-medium text-blue-600 ${
-              currentPage === index + 1 ? '' : 'text-blue-200'
+            key={index}
+            type="button"
+            className={`inline-flex items-center border border-gray-200 px-4 py-2 text-sm font-semibold hover:bg-gray-50 ${
+              currentPage === pageNumber ? 'bg-gray-50 text-blue-600' : ''
             }`}
+            onClick={() => handlePageChange(Number(pageNumber))}
           >
-            {index + 1}
+            {pageNumber}
           </button>
         ))}
 
         <button
+          type="button"
+          className="inline-flex items-center rounded-r-lg border border-gray-200 px-2 py-2 text-sm font-semibold"
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="flex cursor-pointer items-center gap-2 px-3 py-1 text-blue-500"
         >
-          <span className="font-medium text-blue-600 hover:text-blue-500/80">
-            Próximo
+          <span className="mr-2 text-sm font-medium text-blue-600">
+            Próxima
           </span>
-          <ArrowRight size={20} className="text-blue-200" />
+          <ArrowRight size={20} />
         </button>
-      </div>
-    </div>
+      </>
+    )
+  }
+
+  return (
+    <nav
+      aria-label="Pagination"
+      className="inline-flex -space-x-px rounded-lg bg-white p-4 text-blue-200 "
+    >
+      {renderPageNumbers()}
+    </nav>
   )
 }
