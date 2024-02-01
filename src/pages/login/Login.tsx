@@ -126,9 +126,11 @@ function Login() {
                 )}
               />
             </div>
+
             <Button
               type="submit"
-              className="w-full gap-2 rounded-[10px] bg-blue-800 py-7 text-2xl font-bold text-white hover:bg-blue-600"
+              className="w-full cursor-pointer gap-2 rounded-[10px] bg-blue-800 py-7 text-2xl font-bold text-white hover:bg-blue-600 disabled:bg-gray-500"
+              disabled={form.formState.isSubmitting || !form.formState.isValid}
             >
               entrar
               <img src={ArrowRightSquare} alt="Seta para direita" />
