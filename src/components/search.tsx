@@ -19,6 +19,7 @@ export const Search: React.FC<SearchProps> = ({ onSearch }) => {
   return (
     <div
       className={`${!onSearch && 'h-0 lg:h-[72px]'} fixed flex w-full items-center justify-center gap-0 bg-white p-4 font-navigation font-medium text-blue-200 shadow-menu-shadow lg:fixed lg:left-64 lg:pb-[15px] lg:pl-8`}
+      aria-label="search-input"
     >
       {onSearch && (
         <>

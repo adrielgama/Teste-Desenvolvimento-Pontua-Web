@@ -25,10 +25,12 @@ const CharacterGrid: React.FC<CharacterGridProps> = ({ currentCharacters }) => {
   return (
     <div
       className={`grid grid-cols-1 gap-3 lg:grid-flow-row lg:grid-cols-2 lg:grid-rows-3 xl:grid-cols-4`}
+      aria-label="characters-list"
     >
       {currentCharacters.map(({ id, name, description, thumbnail }, index) => (
         <div
           key={id}
+          aria-label={id.toString()}
           className={`${
             index < 8
               ? `xl:col-span-1 xl:row-span-1`

@@ -17,7 +17,10 @@ function Sidenav() {
   const { defaultCharacter, selectedCharacter } = useCharacterContext()
 
   return (
-    <div className="fixed bottom-0 z-50 flex h-16 w-full items-center justify-evenly bg-white shadow-menu-shadow lg:h-screen lg:w-64 lg:flex-col lg:items-start lg:justify-normal lg:space-y-2">
+    <div
+      aria-label="sidenav"
+      className="fixed bottom-0 z-50 flex h-16 w-full items-center justify-evenly bg-white shadow-menu-shadow lg:h-screen lg:w-64 lg:flex-col lg:items-start lg:justify-normal lg:space-y-2"
+    >
       <img
         src={LogoPontuaBlue}
         alt="Logo PONTUA cor azul"

@@ -48,7 +48,7 @@ const Profile: React.FC = () => {
             <h1 className="font-bold text-blue-800">Perfil</h1>
             <span className="px-2 font-bold text-orange-500">/</span>
             <span className="font-light text-gray-500">
-              {selectedCharacter?.name.split('(')[0]}
+              {selectedCharacter?.name.split(' (')[0]}
             </span>
           </div>
         </div>

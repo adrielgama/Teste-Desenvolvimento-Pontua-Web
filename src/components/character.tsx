@@ -25,7 +25,9 @@ export const Character: React.FC<CharacterProps> = ({
         className={`h-32 w-20 rounded-xl bg-white  ${isNotImageAvailable ? 'object-contain' : 'object-cover'}`}
       />
       <div className="flex h-full flex-col gap-2">
-        <h1 className="font-bold">{name}</h1>
+        <h1 className="font-bold" aria-label={name}>
+          {name}
+        </h1>
         <p
           className={`${description ? '' : 'italic text-gray-400'} line-clamp-4 text-xs`}
         >

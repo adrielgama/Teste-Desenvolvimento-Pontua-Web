@@ -2,7 +2,10 @@ import { Skeleton } from '../ui/skeleton'
 
 export const CharacterSkeleton = () => {
   return (
-    <div className="flex max-h-[150px] flex-row gap-4 rounded-2xl bg-gray-100 p-4 font-navigation">
+    <div
+      className="flex max-h-[150px] flex-row gap-4 rounded-2xl bg-gray-100 p-4 font-navigation"
+      aria-label="skeleton"
+    >
       <Skeleton className="h-28 w-20 rounded-xl" />
       <div className="flex h-full flex-col justify-between">
         <div className="space-y-2">
