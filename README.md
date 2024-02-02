@@ -164,25 +164,38 @@ pnpm run dev
 
 ## Tecnologias Utilizadas
 
-- Vite
-- React
-- Typescript
-- Tailwind
-- React Hook Form
-- ZOD
-- Shadcn
-- Axios
-- Tanstack React Query
-- React Router Dom
-- Lucide Icons
-- ESLint
-- Prettier
-- Context API
-- Custom Hooks
-- SEO
-- Responsive Design
-- Pixel Perfect
-- Playwright Tests
+**Framework e Bibliotecas:**
+- `Vite`
+- `React`
+- `Typescript`
+
+**Estilização e UI:**
+- `Tailwind`
+- `Shadcn`
+- `Lucide Icons`
+
+**Gerenciamento de Estado e Formulários:**
+- `React Hook Form`
+- `ZOD`
+
+**Requisições HTTP:**
+- `Axios`
+- `Tanstack React Query`
+
+**Navegação e Roteamento:**
+- `React Router Dom`
+
+**Ferramentas de Desenvolvimento:**
+- `ESLint`
+- `Prettier`
+
+**Outras Tecnologias:**
+- `Context API`
+- `Custom Hooks`
+- `SEO`
+- `Responsive Design`
+- `Pixel Perfect`
+- `Playwright Tests`
 
 ## Folder structure
 
