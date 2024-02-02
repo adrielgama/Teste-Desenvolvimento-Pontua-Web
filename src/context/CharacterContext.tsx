@@ -8,6 +8,7 @@ import React, {
 } from 'react'
 
 import { fetchMarvelData } from '@/api/fetchData'
+import { mockedHeroResponse } from '@/mocks/marvelHeroesMocked'
 import { ICharacter, GetCharactersResponse } from '@/types/character'
 
 interface CharacterProviderProps {
@@ -21,7 +22,8 @@ interface ICharacterContextData {
   getCharacters: (
     query: string,
     page: number,
-    pageSize: number
+    pageSize: number,
+    mockData?: boolean | false
   ) => Promise<GetCharactersResponse>
   getCharacterDetails: (id: number) => Promise<void>
 }
@@ -93,22 +95,43 @@ export const CharacterProvider: React.FC<CharacterProviderProps> = ({
     async (
       query: string,
       page: number,
-      pageSize: number
+      pageSize: number,
+      mockedData = true
     ): Promise<GetCharactersResponse> => {
       try {
-        const queryParams = {
-          limit: pageSize,
-          offset: (page - 1) * pageSize,
-          ...(query && { nameStartsWith: query }),
-        }
+        if (mockedData) {
+          const filteredCharacters = mockedHeroResponse.data.results.filter(
+            (character) =>
+              character.name.toLowerCase().includes(query.toLowerCase())
+          )
+          const startIdx = (page - 1) * pageSize
+          const endIdx = startIdx + pageSize
 
-        const response = await fetchMarvelData('characters', queryParams)
-        const characters: ICharacter[] = response.data.data.results
-        const totalItems: number = response.data.data.total
+          const characters: ICharacter[] = filteredCharacters.slice(
+            startIdx,
+            endIdx
+          )
+          const totalItems: number = mockedHeroResponse.data.total
 
-        return {
-          data: characters,
-          totalItems,
+          return {
+            data: characters,
+            totalItems,
+          }
+        } else {
+          const queryParams = {
+            limit: pageSize,
+            offset: (page - 1) * pageSize,
+            ...(query && { nameStartsWith: query }),
+          }
+
+          const response = await fetchMarvelData('characters', queryParams)
+          const characters: ICharacter[] = response.data.data.results
+          const totalItems: number = response.data.data.total
+
+          return {
+            data: characters,
+            totalItems,
+          }
         }
       } catch (error) {
         console.error('Erro ao obter personagens:', error)
