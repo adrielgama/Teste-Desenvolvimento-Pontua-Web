@@ -112,11 +112,71 @@ bem como seu nome e imagem;<br/>
 
 ---
 
+
 # Documentação da Aplicação
 
+![Project Image](public/general-project-image.webp)
+  
 
->Você pode escrever a documentação da sua aplicação a partir daqui...
-> 
+## Introdução
+**Finalidade:** Aplicação criada como parte do teste para a vaga de Desenvolvedor Front-end.
+**Repositório da Aplicação:**  [GitHub](https://github.com/adrielgama/Teste-Desenvolvimento-Pontua-Web)
 
+  
 
----
+## Instalação
+**Requisitos:**
+- Node.js (v14.0.0 ou superior)
+- PNPM (v7.0.0 ou superior)
+
+**Instruções de Instalação:**
+
+	```bash
+	git clone https://github.com/adrielgama/Teste-Desenvolvimento-Pontua-Web.git
+	cd Teste-Desenvolvimento-Pontua-Web
+	pnpm install
+	```
+ 
+
+## Configuração
+**Configurações Iniciais:**
+- Configure as variáveis de ambiente no arquivo .env.example.
+- Utilize `pnpm run dev` para iniciar a aplicação localmente.
+
+## Uso
+
+**Comandos e Operações Principais:**
+-  `pnpm run dev`: Inicia a aplicação localmente.
+-  `pnpm run test`: Executa os testes usando Playwright UI.
+
+**Exemplos de Uso:**
+	```
+	pnpm run dev
+	``` 
+
+## Autenticação
+ **Credenciais de Login:**
+- Email: `user@email.com`
+- Senha: `123`
+
+## Tecnologias Utilizadas
+
+- Vite
+- React
+- Typescript
+- Tailwind
+- React Hook Form
+- ZOD
+- Shadcn
+- Axios
+- Tanstack React Query
+- React Router Dom
+- Lucide Icons
+- ESLint
+- Prettier
+- Context API
+- Custom Hooks
+- SEO
+- Responsive Design
+- Pixel Perfect
+- Playwright Tests
