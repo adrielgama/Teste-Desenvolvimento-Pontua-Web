@@ -131,11 +131,11 @@ bem como seu nome e imagem;<br/>
 
 **Instruções de Instalação:**
 
-	```bash
-	git clone https://github.com/adrielgama/Teste-Desenvolvimento-Pontua-Web.git
-	cd Teste-Desenvolvimento-Pontua-Web
-	pnpm install
-	```
+```
+git clone https://github.com/adrielgama/Teste-Desenvolvimento-Pontua-Web.git
+cd Teste-Desenvolvimento-Pontua-Web
+pnpm install
+```
  
 
 ## Configuração
@@ -150,9 +150,11 @@ bem como seu nome e imagem;<br/>
 -  `pnpm run test`: Executa os testes usando Playwright UI.
 
 **Exemplos de Uso:**
-	```
-	pnpm run dev
-	``` 
+
+```
+pnpm run dev
+```
+	
 
 ## Autenticação
  **Credenciais de Login:**
