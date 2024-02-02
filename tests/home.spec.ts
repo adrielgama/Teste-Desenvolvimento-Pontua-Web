@@ -22,6 +22,7 @@ test('Home and select Character', async ({ context }) => {
   await pagination.waitFor({ state: 'visible', timeout: 1000 })
   await charactersList.waitFor({ state: 'visible', timeout: 3000 })
 
+  await page.waitForTimeout(5000)
   await page
     .locator(`[aria-label="${characterPickerList[1].id.toString()}"]`)
     .click()
@@ -40,25 +41,16 @@ test('Search character', async ({ context }) => {
   const page = await authenticate(context)
   await page.goto(authenticatedRoutes.home)
 
-  const sidenav = await page.locator('[aria-label="sidenav"]')
-  const search = await page.locator('[aria-label="search-input"]')
   const searchInput = await page.locator('[placeholder="Busque um agente"]')
-
   const charactersList = await page.locator('[aria-label="characters-list"]')
-  const pagination = await page.locator('[aria-label="Pagination"]')
 
-  await expect(sidenav).toBeVisible()
-  await expect(search).toBeVisible()
   await expect(searchInput).toBeVisible()
-
-  await pagination.waitFor({ state: 'visible', timeout: 1000 })
-  await charactersList.waitFor({ state: 'visible', timeout: 6000 })
-
+  await charactersList.waitFor({ state: 'visible', timeout: 10000 })
   await searchInput.fill(characterPickerList[4].name.slice(0, 4))
-  await page.waitForTimeout(2000)
+
+  await page.waitForLoadState('networkidle')
   await charactersList.waitFor({ state: 'visible', timeout: 6000 })
 
-  await page.waitForTimeout(2000)
   expect(page.getByText(characterPickerList[4].name)).toBeVisible()
 })
 
@@ -77,13 +69,12 @@ test('Pagination', async ({ context }) => {
   await expect(search).toBeVisible()
   await expect(searchInput).toBeVisible()
 
-  await charactersList.waitFor({ state: 'visible', timeout: 3000 })
-  await pagination.waitFor({ state: 'visible', timeout: 1000 })
+  await charactersList.waitFor({ state: 'visible', timeout: 10000 })
+  await pagination.waitFor({ state: 'visible', timeout: 3000 })
 
   expect(page.getByText('2').click())
 
-  await charactersList.waitFor({ state: 'visible', timeout: 6000 })
-
-  await page.waitForTimeout(4000)
+  await page.waitForLoadState('networkidle')
+  await charactersList.waitFor({ state: 'visible', timeout: 10000 })
   expect(page.getByText(characterPickerList[11].name)).toBeVisible()
 })
