@@ -12,7 +12,8 @@
 
 ---
 
->Link para layout no Figma: [layout]('https://www.figma.com/file/QFEzv3O4PWCzmvicy7e7sm/Teste-de-Desenvolvimento?node-id=0-1&t=D2fOR8TxhmRi52td-0')
+>Link para layout no Figma: [layout](https://www.figma.com/file/QFEzv3O4PWCzmvicy7e7sm/Teste-de-Desenvolvimento?node-id=0-1&t=D2fOR8TxhmRi52td-0)
+
 
 ---
 
@@ -131,7 +132,7 @@ bem como seu nome e imagem;<br/>
 
 **Instruções de Instalação:**
 
-```
+```bash
 git clone https://github.com/adrielgama/Teste-Desenvolvimento-Pontua-Web.git
 cd Teste-Desenvolvimento-Pontua-Web
 pnpm install
@@ -151,7 +152,7 @@ pnpm install
 
 **Exemplos de Uso:**
 
-```
+```bash
 pnpm run dev
 ```
 	
@@ -182,3 +183,29 @@ pnpm run dev
 - Responsive Design
 - Pixel Perfect
 - Playwright Tests
+
+## Folder structure
+
+```bash
+|-- public
+|-- src
+|   |-- api
+|   |-- assets
+|   |-- components
+|   |-- context
+|   |-- hooks
+|   |-- lib
+|   |-- mocks
+|       |-- fakers
+|   |-- pages
+|   |-- routes
+|   |-- types
+|   |-- utils
+|   - App.tsx
+|   - globals.css
+|   - main.tsx
+|-- ...
+|-- .env
+|-- index.html
+|-- README.md
+```
