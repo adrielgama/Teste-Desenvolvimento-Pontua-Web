@@ -10,14 +10,14 @@ test('Home and select Character', async ({ context }) => {
   const sidenav = await page.locator('[aria-label="sidenav"]')
   const search = await page.locator('[aria-label="search-input"]')
   const searchInput = await page.locator('[placeholder="Busque um agente"]')
-  const skeletonElement = await page.locator('[aria-label="skeleton"]')
+  const skeletonElement = await page.locator('[aria-label="skeleton"]').first()
   const charactersList = await page.locator('[aria-label="characters-list"]')
   const pagination = await page.locator('[aria-label="Pagination"]')
 
   await expect(sidenav).toBeVisible()
   await expect(search).toBeVisible()
   await expect(searchInput).toBeVisible()
-  await expect(skeletonElement).toBeVisible()
+  await expect(skeletonElement).toBeHidden()
 
   await pagination.waitFor({ state: 'visible', timeout: 1000 })
   await charactersList.waitFor({ state: 'visible', timeout: 3000 })
@@ -34,4 +34,56 @@ test('Home and select Character', async ({ context }) => {
       characterPickerList[1].id.toString()
     )
   )
+})
+
+test('Search character', async ({ context }) => {
+  const page = await authenticate(context)
+  await page.goto(authenticatedRoutes.home)
+
+  const sidenav = await page.locator('[aria-label="sidenav"]')
+  const search = await page.locator('[aria-label="search-input"]')
+  const searchInput = await page.locator('[placeholder="Busque um agente"]')
+
+  const charactersList = await page.locator('[aria-label="characters-list"]')
+  const pagination = await page.locator('[aria-label="Pagination"]')
+
+  await expect(sidenav).toBeVisible()
+  await expect(search).toBeVisible()
+  await expect(searchInput).toBeVisible()
+
+  await pagination.waitFor({ state: 'visible', timeout: 1000 })
+  await charactersList.waitFor({ state: 'visible', timeout: 3000 })
+
+  await searchInput.fill(characterPickerList[4].name.slice(0, 4))
+  await page.waitForTimeout(2000)
+  await charactersList.waitFor({ state: 'visible', timeout: 1000 })
+
+  await page.waitForTimeout(2000)
+  expect(page.getByText(characterPickerList[4].name)).toBeVisible()
+})
+
+test('Pagination', async ({ context }) => {
+  const page = await authenticate(context)
+  await page.goto(authenticatedRoutes.home)
+
+  const sidenav = await page.locator('[aria-label="sidenav"]')
+  const search = await page.locator('[aria-label="search-input"]')
+  const searchInput = await page.locator('[placeholder="Busque um agente"]')
+
+  const charactersList = await page.locator('[aria-label="characters-list"]')
+  const pagination = await page.locator('[aria-label="Pagination"]')
+
+  await expect(sidenav).toBeVisible()
+  await expect(search).toBeVisible()
+  await expect(searchInput).toBeVisible()
+
+  await charactersList.waitFor({ state: 'visible', timeout: 3000 })
+  await pagination.waitFor({ state: 'visible', timeout: 1000 })
+
+  expect(page.getByText('2').click())
+
+  await charactersList.waitFor({ state: 'visible', timeout: 1000 })
+
+  await page.waitForTimeout(4000)
+  expect(page.getByText(characterPickerList[11].name)).toBeVisible()
 })
