@@ -22,7 +22,7 @@ const Home: React.FC = () => {
   const [currentPage, setCurrentPage] = React.useState(1)
   const [isDebouncing, setIsDebouncing] = React.useState(false)
 
-  const debouncedSearchValue = useDebounce(searchValue, 1000)
+  const debouncedSearchValue = useDebounce(searchValue, 500)
 
   const {
     data: charactersData,
@@ -55,7 +55,7 @@ const Home: React.FC = () => {
       const timer = setTimeout(() => {
         setIsDebouncing(false)
         refetch()
-      }, 500)
+      }, 1000)
 
       return () => clearTimeout(timer)
     }
@@ -67,7 +67,13 @@ const Home: React.FC = () => {
       <Search onSearch={handleSearch} />
       <div className="absolute inset-0 bottom-14 top-16 -z-10 flex h-auto flex-col items-center gap-3 bg-white p-4 lg:left-64 lg:top-20 lg:gap-8">
         <div className="w-full pb-36">
-          {(isDebouncing || isCharactersLoading) && <CharacterSkeleton />}
+          {(isDebouncing || isCharactersLoading) && (
+            <div className="space-y-4">
+              <CharacterSkeleton aria-label="skeleton-character" />
+              <CharacterSkeleton />
+              <CharacterSkeleton />
+            </div>
+          )}
           {!isDebouncing && !isCharactersLoading && (
             <CharacterGrid currentCharacters={currentCharacters} />
           )}
