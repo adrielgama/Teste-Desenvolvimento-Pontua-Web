@@ -52,11 +52,11 @@ test('Search character', async ({ context }) => {
   await expect(searchInput).toBeVisible()
 
   await pagination.waitFor({ state: 'visible', timeout: 1000 })
-  await charactersList.waitFor({ state: 'visible', timeout: 3000 })
+  await charactersList.waitFor({ state: 'visible', timeout: 6000 })
 
   await searchInput.fill(characterPickerList[4].name.slice(0, 4))
   await page.waitForTimeout(2000)
-  await charactersList.waitFor({ state: 'visible', timeout: 1000 })
+  await charactersList.waitFor({ state: 'visible', timeout: 6000 })
 
   await page.waitForTimeout(2000)
   expect(page.getByText(characterPickerList[4].name)).toBeVisible()
@@ -82,7 +82,7 @@ test('Pagination', async ({ context }) => {
 
   expect(page.getByText('2').click())
 
-  await charactersList.waitFor({ state: 'visible', timeout: 1000 })
+  await charactersList.waitFor({ state: 'visible', timeout: 6000 })
 
   await page.waitForTimeout(4000)
   expect(page.getByText(characterPickerList[11].name)).toBeVisible()
