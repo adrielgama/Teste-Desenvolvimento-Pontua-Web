@@ -96,7 +96,7 @@ export const CharacterProvider: React.FC<CharacterProviderProps> = ({
       query: string,
       page: number,
       pageSize: number,
-      mockedData = true
+      mockedData = false
     ): Promise<GetCharactersResponse> => {
       try {
         if (mockedData) {
